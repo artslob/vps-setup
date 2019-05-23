@@ -54,3 +54,9 @@ ansible-playbook 01-create-user.yml -e "host_env=ec2 root_user=ubuntu"
 Flag `-e` (or `--extra-vars`) provides additional environment variables, which override
 default values in playbook.  
 Contents of encrypted `secrets.yml` parsed by ansible automatically.
+```
+
+# Useful links
+1. [Ansible vault tutorial](https://www.digitalocean.com/community/tutorials/how-to-use-vault-to-protect-sensitive-ansible-data-on-ubuntu-16-04)
+2. [Create user with password](https://stackoverflow.com/questions/19292899/creating-a-new-user-and-password-with-ansible)
+3. [Create user accounts and setup ssh keys](http://minimum-viable-automation.com/ansible/use-ansible-create-user-accounts-setup-ssh-keys/)
