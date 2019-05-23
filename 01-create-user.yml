@@ -1,0 +1,21 @@
+---
+- hosts: "{{ host_env | default('web') }}"
+  remote_user: "{{ root_user | default('root') }}"
+  become: yes
+  vars:
+    default_username: artslob
+  tasks:
+    - include_vars: secrets.yml
+
+    - name: add default user with name "{{ username | default(default_username) }}"
+      user:
+        name: "{{ username | default(default_username) }}"
+        password: "{{ vault_password | password_hash('sha512', vault_salt) }}"
+        comment: Master of the Universe
+        shell: /bin/bash
+        groups: sudo
+        append: yes
+        create_home: yes
+        state: present
+        generate_ssh_key: yes
+        ssh_key_bits: 2048
