@@ -29,7 +29,7 @@
 
     - name: copy private and public keys to vps
       copy:
-        src: "vps-keys/{{ item.name }}"
+        src: "vps-ssh-keys/{{ item.name }}"
         dest: "/home/{{ _user }}/.ssh/{{ item.name }}"
         mode: "{{ item.mode }}"
         owner: "{{ _user }}"
