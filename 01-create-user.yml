@@ -38,3 +38,11 @@
       with_items:
         - { name: 'id_rsa',     mode: '0400' }
         - { name: 'id_rsa.pub', mode: '0444' }
+
+    - name: enable passwordless sudo for user "{{ _user }}"
+      copy:
+        content: '{{ _user }} ALL=(ALL) NOPASSWD:ALL'
+        dest: "/etc/sudoers.d/90-{{ _user }}"
+        owner: root
+        group: root
+        mode: 0440
