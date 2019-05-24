@@ -18,7 +18,7 @@
         create_home: yes
         state: present
         generate_ssh_key: yes
-        ssh_key_bits: 2048
+        ssh_key_bits: 4096
 
     - name: add authorized key for user "{{ _user }}" copying it from current user
       authorized_key:
