@@ -17,11 +17,24 @@
         append: yes
         create_home: yes
         state: present
-        generate_ssh_key: yes
-        ssh_key_bits: 4096
+        generate_ssh_key: no
+    #    generate_ssh_key: yes
+    #    ssh_key_bits: 4096
 
-    - name: add authorized key for user "{{ _user }}" copying it from current user
+    - name: add authorized key for user "{{ _user }}" copying it from local user
       authorized_key:
         user: "{{ _user }}"
         state: present
         key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+
+    - name: copy private and public keys to vps
+      copy:
+        src: "vps-keys/{{ item.name }}"
+        dest: "/home/{{ _user }}/.ssh/{{ item.name }}"
+        mode: "{{ item.mode }}"
+        owner: "{{ _user }}"
+        group: "{{ _user }}"
+        backup: yes
+      with_items:
+        - { name: 'id_rsa',     mode: '0400' }
+        - { name: 'id_rsa.pub', mode: '0444' }
