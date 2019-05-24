@@ -3,13 +3,13 @@
   remote_user: "{{ root_user | default('root') }}"
   become: yes
   vars:
-    default_username: artslob
+    _user: "{{ username | default('artslob') }}"
   tasks:
     - include_vars: secrets.yml
 
-    - name: add default user with name "{{ username | default(default_username) }}"
+    - name: add default user with name "{{ _user }}"
       user:
-        name: "{{ username | default(default_username) }}"
+        name: "{{ _user }}"
         password: "{{ vault_password | password_hash('sha512', vault_salt) }}"
         comment: Master of the Universe
         shell: /bin/bash
