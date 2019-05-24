@@ -10,7 +10,7 @@
     - name: add default user with name "{{ _user }}"
       user:
         name: "{{ _user }}"
-        password: "{{ vault_password | password_hash('sha512', vault_salt) }}"
+        password: "{{ vault_user_password | password_hash('sha512', vault_user_salt) }}"
         comment: Master of the Universe
         shell: /bin/bash
         groups: sudo

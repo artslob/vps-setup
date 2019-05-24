@@ -39,8 +39,8 @@ For example:
 
 2. Create file `secrets.yml` in project root directory with this template:
     ```
-    vault_password: somepass
-    vault_salt: somesalt
+    vault_user_password: somepass
+    vault_user_salt: somesalt
     ```
     This file is required for user creation.
 
