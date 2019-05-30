@@ -46,3 +46,12 @@
         owner: root
         group: root
         mode: 0440
+
+    - name: enable SSH forwarding for sudo
+      copy:
+        content: |
+          Defaults    env_keep += "SSH_AUTH_SOCK"
+        dest: "/etc/sudoers.d/80-auth-sock-env"
+        owner: root
+        group: root
+        mode: 0440
