@@ -1,0 +1,19 @@
+---
+- hosts: "{{ host_env | default('web') }}"
+  vars:
+    username: "{{ root_user | default('artslob') }}"
+  remote_user: "{{ username }}"
+  become: yes
+  tasks:
+    - name: Check nginx is installed
+      apt:
+        name: nginx
+        state: present
+      check_mode: true
+      register: check_nginx
+
+    - name: Install nginx
+      apt:
+        package: nginx
+        update_cache: yes
+      when: check_nginx.changed
