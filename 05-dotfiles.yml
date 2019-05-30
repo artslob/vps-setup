@@ -21,3 +21,8 @@
         - bash
         - git
         - vim
+
+    - name: Set platform for bash
+      copy:
+        content: vps
+        dest: '{{ homedir }}/.bash-config/platform'
