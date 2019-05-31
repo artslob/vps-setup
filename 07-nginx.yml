@@ -2,6 +2,7 @@
 - hosts: "{{ host_env | default('web') }}"
   vars:
     username: "{{ root_user | default('artslob') }}"
+    nginx_root: '/etc/nginx'
   remote_user: "{{ username }}"
   become: yes
   tasks:
@@ -17,3 +18,42 @@
         package: nginx
         update_cache: yes
       when: check_nginx.changed
+
+    - name: Init git repo
+      command: git init
+      args:
+        chdir: '{{ nginx_root }}'
+
+    - name: Add remote
+      command: git remote add origin git@github.com:artslob/nginx-config.git
+      args:
+        chdir: '{{ nginx_root }}'
+      register: remote_result
+      failed_when: "remote_result.rc != 0 and 'remote origin already exists' not in remote_result.stderr"
+
+    - name: Fetch all
+      command: git fetch --all
+      args:
+        chdir: '{{ nginx_root }}'
+
+    # Warning: this will discard any changes in working directory!
+    - name: Reset hard
+      command: git reset --hard origin/master
+      args:
+        chdir: '{{ nginx_root }}'
+
+    - name: Remove default link
+      file:
+        state: absent
+        path: "{{ nginx_root }}/sites-enabled/default"
+
+    - name: Create a symbolic link
+      file:
+        src: "{{ nginx_root }}/sites-available/artslob"
+        dest: "{{ nginx_root }}/sites-enabled/artslob"
+        state: link
+
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted
