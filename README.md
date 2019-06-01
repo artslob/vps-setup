@@ -20,7 +20,7 @@ file `~/.ansible.cfg`:
     ```
     **Few notes:**
     * Pipelining can make significant performance improvement when enabled, but have
-    [incompatibility](https://docs.ansible.com/ansible/2.4/intro_configuration.html#pipelining)
+    [incompatibility](https://docs.ansible.com/ansible/latest/reference_appendices/config.html#ansible-pipelining)
     with `requiretty` in `/etc/sudoers`.
     * We will use `ssh-agent` and
     [agent forwarding](https://developer.github.com/v3/guides/using-ssh-agent-forwarding/)
