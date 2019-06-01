@@ -16,10 +16,15 @@ file `~/.ansible.cfg`:
 
     [ssh_connection]
     ssh_args = -o ForwardAgent=yes -o ControlMaster=auto -o ControlPersist=60s
+    pipelining = True
     ```
-    We will use `ssh-agent` and
+    **Few notes:**
+    * Pipelining can make significant performance improvement when enabled, but have
+    [incompatibility](https://docs.ansible.com/ansible/2.4/intro_configuration.html#pipelining)
+    with `requiretty` in `/etc/sudoers`.
+    * We will use `ssh-agent` and
     [agent forwarding](https://developer.github.com/v3/guides/using-ssh-agent-forwarding/)
-    to apply ssh keys from local machine to remotes. So dont forget to run `ssh-add` before running scripts.
+    to exploit ssh keys from local machine on remotes. So don't forget to run `ssh-add` before running scripts.
 
 2. Create [hosts](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) file `~/.ansible.hosts`.  
 For example:
