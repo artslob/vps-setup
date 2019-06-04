@@ -2,6 +2,7 @@
 - hosts: "{{ host_env | default('web') }}"
   vars:
     username: "{{ root_user | default('artslob') }}"
+    homedir: "/home/{{ username }}"
     nginx_root: '/etc/nginx'
   remote_user: "{{ username }}"
   become: yes
@@ -52,6 +53,12 @@
         src: "{{ nginx_root }}/sites-available/artslob"
         dest: "{{ nginx_root }}/sites-enabled/artslob"
         state: link
+
+    - name: Clone "artslob.ru" project
+      git:
+        dest: "{{ homedir }}/artslob.ru"
+        repo: git@github.com:artslob/artslob.ru.git
+        accept_hostkey: yes
 
     - name: Restart nginx
       service:
