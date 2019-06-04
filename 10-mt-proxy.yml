@@ -57,3 +57,10 @@
         state: restarted
         enabled: yes
         daemon_reload: yes
+
+    - name: Add entry to crontab to update 'proxy-multi.conf' file every day
+      cron:
+        name: "Update proxy-multi.conf file for mt-proxy"
+        job: 'bash "{{ proxy_dir }}/02-obtain-telegram-configuration.sh" > /dev/null'
+        special_time: daily
+        state: present
