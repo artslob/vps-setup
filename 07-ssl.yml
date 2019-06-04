@@ -12,6 +12,19 @@
   tasks:
     - include_vars: secrets.yml
 
+    - name: Check nginx is installed
+      apt:
+        name: nginx
+        state: present
+      check_mode: true
+      register: check_nginx
+
+    - name: Install nginx
+      apt:
+        package: nginx
+        update_cache: yes
+      when: check_nginx.changed
+
     - name: clone acme repo
       git:
         repo: https://github.com/Neilpang/acme.sh.git
