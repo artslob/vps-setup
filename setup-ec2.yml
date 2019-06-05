@@ -1,10 +1,8 @@
 ---
 - hosts: ec2
   become: yes
-  remote_user: ubuntu
+  remote_user: artslob
 
   tasks:
-    - include_vars: secrets.yml
-
     - include_role:
-        name: 'create-user'
+        name: 'hostname'
