@@ -1,0 +1,4 @@
+---
+username: artslob
+homedir: "/home/{{ username }}"
+nginx_root: '/etc/nginx'

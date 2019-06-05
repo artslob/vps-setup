@@ -1,5 +1,5 @@
 ---
-username: "{{ root_user | default('artslob') }}"
+username: artslob
 homedir: "/home/{{ username }}"
 acme_dir: "{{ homedir }}/acme.sh"
 acme_installed: "{{ homedir }}/acme"
