@@ -3,3 +3,9 @@ username: artslob
 ip_versions:
   - ipv4
   - ipv6
+open_ports:
+  - '22'
+  - '80'
+  - '443'
+  - '2222'
+  - '2223'

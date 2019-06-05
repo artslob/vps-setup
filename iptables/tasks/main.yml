@@ -49,12 +49,7 @@
     destination_port: '{{ item }}'
     jump: ACCEPT
     ip_version: ipv4
-  with_items:
-    - '22'
-    - '80'
-    - '443'
-    - '2222'
-    - '2223'
+  with_items: '{{ open_ports }}'
 
 - name: Accept tcp ports for ipv6
   iptables:
@@ -63,12 +58,7 @@
     destination_port: '{{ item }}'
     jump: ACCEPT
     ip_version: ipv6
-  with_items:
-    - '22'
-    - '80'
-    - '443'
-    - '2222'
-    - '2223'
+  with_items: '{{ open_ports }}'
 
 - name: Drop all others
   iptables:
