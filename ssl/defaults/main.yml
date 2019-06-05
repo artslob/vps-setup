@@ -1,0 +1,7 @@
+---
+username: "{{ root_user | default('artslob') }}"
+homedir: "/home/{{ username }}"
+acme_dir: "{{ homedir }}/acme.sh"
+acme_installed: "{{ homedir }}/acme"
+script: "{{ acme_dir }}/acme.sh"
+keys: "{{ homedir }}/keys"
