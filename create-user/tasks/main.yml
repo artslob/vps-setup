@@ -1,0 +1,35 @@
+---
+- name: add default user with name "{{ username }}"
+  user:
+    name: "{{ username }}"
+    password: "{{ vault_user_password | password_hash('sha512', vault_user_salt) }}"
+    comment: Master of the Universe
+    shell: /bin/bash
+    groups: sudo
+    append: yes
+    create_home: yes
+    state: present
+    generate_ssh_key: no
+
+- name: add authorized key for user "{{ username }}" copying it from local user
+  authorized_key:
+    user: "{{ username }}"
+    state: present
+    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+
+- name: enable passwordless sudo for user "{{ username }}"
+  copy:
+    content: '{{ username }} ALL=(ALL) NOPASSWD:ALL'
+    dest: "/etc/sudoers.d/90-{{ username }}"
+    owner: root
+    group: root
+    mode: 0440
+
+- name: enable SSH forwarding for sudo
+  copy:
+    content: |
+      Defaults    env_keep += "SSH_AUTH_SOCK"
+    dest: "/etc/sudoers.d/80-auth-sock-env"
+    owner: root
+    group: root
+    mode: 0440

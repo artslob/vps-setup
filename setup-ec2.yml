@@ -1,0 +1,10 @@
+---
+- hosts: ec2
+  become: yes
+  remote_user: ubuntu
+
+  tasks:
+    - include_vars: secrets.yml
+
+    - include_role:
+        name: 'create-user'
