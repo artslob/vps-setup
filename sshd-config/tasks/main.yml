@@ -1,0 +1,18 @@
+---
+- name: Password based logins are disabled - only public key based logins are allowed.
+  lineinfile: dest=/etc/ssh/sshd_config regexp='^#?(\s)*AuthenticationMethods' line='AuthenticationMethods publickey'
+  notify: reload_sshd
+- lineinfile: dest=/etc/ssh/sshd_config regexp='^#?(\s)*PasswordAuthentication' line='PasswordAuthentication no'
+  notify: reload_sshd
+- lineinfile: dest=/etc/ssh/sshd_config regexp='^#?(\s)*ChallengeResponseAuthentication' line='ChallengeResponseAuthentication no'
+  notify: reload_sshd
+- lineinfile: dest=/etc/ssh/sshd_config regexp='^#?(\s)*PubkeyAuthentication' line='PubkeyAuthentication yes'
+  notify: reload_sshd
+
+- name: Disable root login
+  lineinfile: dest=/etc/ssh/sshd_config regexp='^#?(\s)*PermitRootLogin' line='PermitRootLogin No'
+  notify: reload_sshd
+
+- name: Allow only user {{ username }}
+  lineinfile: dest=/etc/ssh/sshd_config regexp='^#?(\s)*AllowUsers' line='AllowUsers {{ username }}'
+  notify: reload_sshd

@@ -4,5 +4,5 @@
   remote_user: artslob
 
   tasks:
-    - include_role:
-        name: 'hostname'
+    - include_role: name=hostname
+    - include_role: name=sshd-config
