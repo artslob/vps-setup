@@ -1,0 +1,20 @@
+---
+- name: Clone dotfile repository
+  git:
+    dest: "{{ dotfiles_dir }}"
+    repo: git@github.com:artslob/dotfiles.git
+    accept_hostkey: yes
+
+- name: Use stow to create symbolic links
+  command: stow -t "{{ homedir }}" --adopt {{ item }}
+  args:
+    chdir: "{{ dotfiles_dir }}"
+  with_items:
+    - bash
+    - git
+    - vim
+
+- name: Set platform for bash
+  copy:
+    content: vps
+    dest: '{{ homedir }}/.bash-config/platform'

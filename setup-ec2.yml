@@ -7,3 +7,5 @@
     - include_role: name=hostname
     - include_role: name=sshd-config
     - include_role: name=packages
+    - import_role: name=dotfiles
+      become: no

@@ -1,0 +1,4 @@
+---
+username: artslob
+homedir: "/home/{{ username }}"
+dotfiles_dir: "{{ homedir }}/.dotfiles"
