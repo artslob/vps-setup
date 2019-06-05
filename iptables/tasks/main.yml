@@ -1,0 +1,81 @@
+---
+- name: Install iptables
+  apt:
+    package: ['iptables', 'iptables-persistent']
+    state: present
+
+- name: Set default policy
+  command: '{{ item.command }} -P {{ item.chain }} ACCEPT'
+  with_items:
+    - { command: 'iptables', chain: 'INPUT' }
+    - { command: 'iptables', chain: 'OUTPUT' }
+    - { command: 'ip6tables', chain: 'OUTPUT' }
+    - { command: 'ip6tables', chain: 'OUTPUT' }
+
+- name: Flush rules
+  command: '{{ item }} -F'
+  with_items:
+    - iptables
+    - ip6tables
+
+- name: Accept loopback
+  iptables:
+    chain: INPUT
+    in_interface: lo
+    jump: ACCEPT
+    ip_version: '{{ item }}'
+  with_items: '{{ ip_versions }}'
+
+- name: Keep opened connections
+  iptables:
+    chain: INPUT
+    ctstate: ['ESTABLISHED', 'RELATED']
+    jump: ACCEPT
+    ip_version: '{{ item }}'
+  with_items: '{{ ip_versions }}'
+
+- name: Accept icmp
+  iptables:
+    chain: INPUT
+    protocol: icmp
+    jump: ACCEPT
+    ip_version: '{{ item }}'
+  with_items: '{{ ip_versions }}'
+
+- name: Accept tcp ports for ipv4
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: '{{ item }}'
+    jump: ACCEPT
+    ip_version: ipv4
+  with_items:
+    - '22'
+    - '80'
+    - '443'
+    - '2222'
+    - '2223'
+
+- name: Accept tcp ports for ipv6
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: '{{ item }}'
+    jump: ACCEPT
+    ip_version: ipv6
+  with_items:
+    - '22'
+    - '80'
+    - '443'
+    - '2222'
+    - '2223'
+
+- name: Drop all others
+  iptables:
+    chain: INPUT
+    jump: DROP
+    ip_version: '{{ item }}'
+  with_items: '{{ ip_versions }}'
+
+- name: Save rules
+  command: netfilter-persistent save
