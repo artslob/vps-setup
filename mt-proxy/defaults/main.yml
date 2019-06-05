@@ -1,0 +1,5 @@
+---
+username: artslob
+homedir: "/home/{{ username }}"
+proxy_dir: "{{ homedir }}/mt-proxy"
+mt_dir: "{{ proxy_dir }}/MTProxy"
