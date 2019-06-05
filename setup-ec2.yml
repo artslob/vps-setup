@@ -12,3 +12,4 @@
     - include_role: name=iptables
     - include_role: name=ssl
     - include_role: name=nginx
+    - include_role: name=timezone
