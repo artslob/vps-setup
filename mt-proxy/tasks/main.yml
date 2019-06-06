@@ -31,10 +31,9 @@
 - debug: var=output.stdout_lines
 
 - name: Copy systemd service config
-  copy:
-    src: "{{ proxy_dir }}/systemd-config.example.service"
+  template:
+    src: systemd-config.service.j2
     dest: /etc/systemd/system/MTProxy.service
-    remote_src: yes
 
 - name: Update systemctl
   systemd:
