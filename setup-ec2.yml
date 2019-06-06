@@ -6,21 +6,20 @@
   tasks:
     - include_vars: secrets.yml
 
-    - include_role:
-        name: 'create-user'
+    - include_role: name=roles/create-user
 
 - hosts: ec2
   become: yes
   remote_user: artslob
 
   tasks:
-    - include_role: name=hostname
-    - include_role: name=sshd-config
-    - include_role: name=packages
-    - import_role: name=dotfiles
+    - include_role: name=roles/hostname
+    - include_role: name=roles/sshd-config
+    - include_role: name=roles/packages
+    - import_role: name=roles/dotfiles
       become: no
-    - include_role: name=iptables
-    - include_role: name=ssl
-    - include_role: name=nginx
-    - include_role: name=timezone
-    - include_role: name=mt-proxy
+    - include_role: name=roles/iptables
+    - include_role: name=roles/ssl
+    - include_role: name=roles/nginx
+    - include_role: name=roles/timezone
+    - include_role: name=roles/mt-proxy
