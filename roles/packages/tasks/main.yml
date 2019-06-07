@@ -1,7 +1,7 @@
 ---
 - name: Update cache and install packages
   apt:
-    package: ['git', 'htop', 'stow']
+    package: "{{ packages }}"
     update_cache: yes
 
 #- name: Disable systemd-resolved caching DNS daemon

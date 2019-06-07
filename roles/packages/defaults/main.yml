@@ -1,0 +1,6 @@
+---
+packages:
+  - git
+  - htop
+  - stow
+  - vim
