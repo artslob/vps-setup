@@ -1,4 +1,2 @@
 .idea
 /secrets.yml
-/vps-ssh-keys/id_rsa
-/vps-ssh-keys/id_rsa.pub
