@@ -21,7 +21,7 @@
   copy:
     content: |
       {{ username }} ALL=(ALL) NOPASSWD:ALL
-    dest: "/etc/sudoers.d/90-{{ username }}"
+    dest: "/etc/sudoers.d/82-{{ username }}-passwordless"
     owner: root
     group: root
     mode: 0440
@@ -30,7 +30,7 @@
   copy:
     content: |
       Defaults    env_keep += "SSH_AUTH_SOCK"
-    dest: "/etc/sudoers.d/80-auth-sock-env"
+    dest: "/etc/sudoers.d/71-auth-sock-env"
     owner: root
     group: root
     mode: 0440
