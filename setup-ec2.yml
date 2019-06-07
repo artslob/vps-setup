@@ -1,18 +1,16 @@
 ---
 - hosts: ec2
   become: yes
-  remote_user: ubuntu
-
-  tasks:
-    - include_vars: secrets.yml
-
-    - include_role: name=roles/create-user
-
-- hosts: ec2
-  become: yes
   remote_user: artslob
 
   tasks:
+    - name: Create new user
+      block:
+      - include_vars: secrets.yml
+      - include_role: name=roles/create-user
+      remote_user: "{{ root | default('ubuntu') }}"
+      ignore_unreachable: true
+
     - include_role: name=roles/hostname
     - include_role: name=roles/sshd-config
     - include_role: name=roles/packages
