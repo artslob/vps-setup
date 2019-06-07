@@ -1,5 +1,5 @@
 ---
-- hosts: ec2
+- hosts: "{{ host | default('ec2') }}"
   become: yes
   remote_user: "{{ root | default('ubuntu') }}"
   ignore_unreachable: true
@@ -8,7 +8,7 @@
     - include_vars: secrets.yml
     - include_role: name=roles/create-user
 
-- hosts: ec2
+- hosts: "{{ host | default('ec2') }}"
   become: yes
   remote_user: artslob
 
