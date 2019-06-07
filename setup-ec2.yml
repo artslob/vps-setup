@@ -6,8 +6,8 @@
   tasks:
     - name: Create new user
       block:
-      - include_vars: secrets.yml
-      - include_role: name=roles/create-user
+        - include_vars: secrets.yml
+        - include_role: name=roles/create-user
       remote_user: "{{ root | default('ubuntu') }}"
       ignore_unreachable: true
 
@@ -17,7 +17,9 @@
     - import_role: name=roles/dotfiles
       become: no
     - include_role: name=roles/iptables
-    - include_role: name=roles/ssl
+    - block:
+        - include_vars: secrets.yml
+        - include_role: name=roles/ssl
     - include_role: name=roles/nginx
     - include_role: name=roles/timezone
     - include_role: name=roles/mt-proxy
